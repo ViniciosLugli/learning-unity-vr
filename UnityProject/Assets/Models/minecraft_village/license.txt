@@ -1,0 +1,11 @@
+Model Information:
+* title:	Minecraft village
+* source:	https://sketchfab.com/3d-models/minecraft-village-7a654cb58f72499a9e809927e5cddef8
+* author:	avatar2233 (https://sketchfab.com/avatar223314)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Minecraft village" (https://sketchfab.com/3d-models/minecraft-village-7a654cb58f72499a9e809927e5cddef8) by avatar2233 (https://sketchfab.com/avatar223314) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
