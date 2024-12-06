@@ -1,0 +1,11 @@
+Model Information:
+* title:	gojo
+* source:	https://sketchfab.com/3d-models/gojo-4eb56d8bba0549e0889ad9a0e67b45fb
+* author:	krnpjl (https://sketchfab.com/krnpjl)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "gojo" (https://sketchfab.com/3d-models/gojo-4eb56d8bba0549e0889ad9a0e67b45fb) by krnpjl (https://sketchfab.com/krnpjl) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
