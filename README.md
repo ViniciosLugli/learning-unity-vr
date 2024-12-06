@@ -5,9 +5,11 @@ This repository contains the code for the Unity VR project I created while learn
 ## Assets
 
 -   [Gojo Minecraft](https://sketchfab.com/3d-models/gojo-4eb56d8bba0549e0889ad9a0e67b45fb)
--   [Vila Minecraft](https://sketchfab.com/3d-models/minecraft-village-7a654cb58f72499a9e809927e5cddef8)
+-   [Vila Minecraft(unity)](https://sketchfab.com/3d-models/minecraft-village-7a654cb58f72499a9e809927e5cddef8)
+-   [Vila Minecraft(aframe)](https://sketchfab.com/3d-models/minecraft-village-246a249133cd4238881f02248bfd056c)
 
 ## Screenshots
+
 Unity:
 ![Screenshot](./assets/UseCase.png)
 
