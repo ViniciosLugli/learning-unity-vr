@@ -5,20 +5,129 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Aframe from Unity</title>
 		<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+		<script>
+			AFRAME.registerComponent('look-trigger', {
+				schema: {
+					target: { type: 'selector' },
+					stareTime: { type: 'number', default: 4000 },
+					expansionDuration: { type: 'number', default: 5000 },
+				},
+				init: function () {
+					this.cameraEl = this.el
+					this.isLooking = false
+					this.lookStartTime = null
+					this.isInExpansion = false
+					this.originalSky = null
+					this.domainTimeout = null
+					this.shakeInterval = null
+
+					this.raycaster = new THREE.Raycaster()
+					this.centerVector = new THREE.Vector2(0, 0)
+
+					this.shakeEnabled = false
+					this.shakeStart = null
+
+					this.sceneEl = this.el.sceneEl
+					this.skyEl = document.querySelector('#originalSky')
+					this.expansionSkyEl = document.querySelector('#domainSky')
+					this.soundEl = document.querySelector('#specialzSoundEntity')
+
+					this.expansionSkyEl.setAttribute('visible', 'false')
+				},
+				tick: function (time, timeDelta) {
+					if (this.isInExpansion) {
+						this.lookStartTime = time
+						return
+					}
+
+					var camera = this.cameraEl.components.camera.camera
+					var direction = new THREE.Vector3()
+					camera.getWorldDirection(direction)
+					this.raycaster.set(camera.getWorldPosition(new THREE.Vector3()), direction)
+
+					var intersects = this.raycaster.intersectObject(this.data.target.object3D, true)
+
+					if (intersects.length > 0) {
+						if (!this.isLooking) {
+							this.isLooking = true
+							this.lookStartTime = time
+							this.startShake()
+						} else {
+							if (time - this.lookStartTime > this.data.stareTime) {
+								this.startDomainExpansion()
+							}
+						}
+					} else {
+						if (this.isLooking && !this.isInExpansion) {
+							this.isLooking = false
+							this.stopShake()
+						}
+					}
+
+					if (this.shakeEnabled) {
+						this.applyShake(time)
+					}
+				},
+				startShake: function () {
+					this.shakeEnabled = true
+					this.shakeStart = performance.now()
+				},
+				stopShake: function () {
+					this.shakeEnabled = false
+					this.cameraEl.object3D.rotation.set(0, 0, 0)
+				},
+				applyShake: function (currentTime) {
+					const intensity = 0.005
+					const offset = Math.sin((currentTime - this.shakeStart) * 0.01) * intensity
+					this.cameraEl.object3D.rotation.z = offset
+					this.cameraEl.object3D.rotation.x = offset
+				},
+				startDomainExpansion: function () {
+					this.isInExpansion = true
+					this.stopShake()
+
+					this.skyEl.setAttribute('visible', 'false')
+					this.expansionSkyEl.setAttribute('visible', 'true')
+
+					this.soundEl.components.sound.playSound()
+
+					this.domainTimeout = setTimeout(() => {
+						this.endDomainExpansion()
+					}, this.data.expansionDuration)
+				},
+				endDomainExpansion: function () {
+					this.isInExpansion = false
+
+					this.expansionSkyEl.setAttribute('visible', 'false')
+					this.skyEl.setAttribute('visible', 'true')
+
+					this.soundEl.components.sound.stopSound()
+				},
+			})
+		</script>
 	</head>
 	<body>
 		<a-scene>
 			<a-assets>
 				<a-asset-item id="gojoModel" src="models/gojo/gojo.gltf"></a-asset-item>
 				<a-asset-item id="minecraftVillage" src="models/minecraft-village/village.gltf"></a-asset-item>
+				<a-asset-item id="fliperama" src="models/fliperama/fliperama.gltf"></a-asset-item>
+				<img id="domainExpansionImg" src="skyboxs/domain_expansion.jpg" />
 				<audio id="specialzSound" src="sounds/SPECIALZ.mp3" preload="auto"></audio>
 			</a-assets>
 
+			<a-sky id="originalSky" color="#ECECEC"></a-sky>
+			<a-sky id="domainSky" src="#domainExpansionImg" visible="false"></a-sky>
+
 			<a-entity gltf-model="#minecraftVillage" position="0 0 -5" scale="1 1 1"></a-entity>
-			<a-entity gltf-model="#gojoModel" position="-10 56 -15" scale="1 1 1" rotation="0 0 0"></a-entity>
-			<a-entity sound="src: #specialzSound; autoplay: true; loop: true;"></a-entity>
+			<a-entity id="gojoEntity" gltf-model="#gojoModel" position="-10 56 -15" scale="1 1 1" rotation="0 0 0"></a-entity>
+			<a-entity gltf-model="#fliperama" position="-7 56 -16" scale="20 20 20" rotation="0 -90 0"></a-entity>
+
+			<a-entity id="specialzSoundEntity" sound="src: #specialzSound; autoplay: false; loop: true;"></a-entity>
+
 			<a-entity position="-10 56 -20" rotation="0 180 0">
-				<a-camera></a-camera>
+				<a-camera look-trigger="target: #gojoEntity;"></a-camera>
 			</a-entity>
 		</a-scene>
 	</body>
