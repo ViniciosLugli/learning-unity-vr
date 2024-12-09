@@ -10,8 +10,12 @@ This repository contains the code for the Unity VR project I created while learn
 
 ## Screenshots
 
-Unity:
-![Screenshot](./assets/UseCase.png)
+### Unity:
+![Unity](./assets/UseCase.png)
 
-Aframe:
-![image](https://github.com/user-attachments/assets/1f4bc03b-f997-43e7-84a6-307021f2424e)
+### Aframe:
+![Aframe](https://github.com/user-attachments/assets/1f4bc03b-f997-43e7-84a6-307021f2424e)
+
+
+### Aframe camera interaction
+[interaction](https://github.com/user-attachments/assets/3dfc8724-7517-4155-ac44-9edf0e5b951d)
